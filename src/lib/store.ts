@@ -1,6 +1,7 @@
 // Order + key-pool persistence.
 //
-// Prod (Vercel):  Upstash Redis via env. Supports both Vercel's auto-injected
+// Prod (Vercel):  Upstash Redis via env. Supports Vercel's injected REDIS_URL
+//                 (redis://default:<token>@<host>) as well as the legacy
 //                 KV_REST_API_URL / KV_REST_API_TOKEN and manual
 //                 UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN.
 // Local/dev:      JSON files under ./data (gitignored) — identical API.
@@ -36,11 +37,13 @@ const DATA_DIR = path.join(process.cwd(), "data");
 const FILE = path.join(DATA_DIR, "store.json");
 
 function redisEnv() {
-  return {
-    url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || "",
-    token:
-      process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "",
-  };
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || "";
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "";
+  if (url && token) return { url, token };
+  const cs = process.env.REDIS_URL || "";
+  const m = cs.match(/^redis:\/\/([^:]+):([^@]+)@([^:/]+)/);
+  if (m) return { url: `https://${m[3]}`, token: m[2] };
+  return { url: "", token: "" };
 }
 
 function hasRedis(): boolean {
