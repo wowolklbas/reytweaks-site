@@ -1,13 +1,14 @@
 // Order + key-pool persistence.
 //
-// Prod (Vercel):  Upstash Redis via env. Supports Vercel's injected REDIS_URL
-//                 (redis://default:<token>@<host>) as well as the legacy
-//                 KV_REST_API_URL / KV_REST_API_TOKEN and manual
-//                 UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN.
+// Prod (Vercel):  Redis. Uses ioredis when REDIS_URL (Vercel Redis /
+//                 Redis Cloud) is set, or Upstash REST when
+//                 KV_REST_API_URL/KV_REST_API_TOKEN or
+//                 UPSTASH_REDIS_REST_URL/UPSTASH_REDIS_REST_TOKEN are set.
 // Local/dev:      JSON files under ./data (gitignored) — identical API.
 
 import fs from "node:fs";
 import path from "node:path";
+import Redis from "ioredis";
 import type { Method } from "./config";
 
 export interface Order {
@@ -36,39 +37,56 @@ interface StoreShape {
 const DATA_DIR = path.join(process.cwd(), "data");
 const FILE = path.join(DATA_DIR, "store.json");
 
-function redisEnv() {
+let redisClient: Redis | null = null;
+
+function restEnv() {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || "";
   const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "";
-  if (url && token) return { url, token };
-  const cs = process.env.REDIS_URL || "";
-  const m = cs.match(/^redis:\/\/([^:]+):([^@]+)@([^:/]+)/);
-  if (m) return { url: `https://${m[3]}`, token: m[2] };
-  return { url: "", token: "" };
+  return { url, token };
 }
 
 function hasRedis(): boolean {
-  const e = redisEnv();
-  return Boolean(e.url && e.token);
+  const e = restEnv();
+  if (e.url && e.token) return true;
+  return Boolean(process.env.REDIS_URL);
 }
 
-function redis() {
-  const e = redisEnv();
-  return {
-    get: async (key: string) => {
-      const r = await fetch(`${e.url}/get/${key}`, {
-        headers: { Authorization: `Bearer ${e.token}` },
-      });
-      const j = (await r.json()) as { result?: string | null };
-      return j.result ?? null;
-    },
-    set: async (key: string, value: string) => {
-      await fetch(`${e.url}/set/${key}`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${e.token}` },
-        body: value,
-      });
-    },
-  };
+async function getRaw(key: string): Promise<string | null> {
+  const e = restEnv();
+  if (e.url && e.token) {
+    const r = await fetch(`${e.url}/get/${key}`, {
+      headers: { Authorization: `Bearer ${e.token}` },
+    });
+    const j = (await r.json()) as { result?: string | null };
+    return j.result ?? null;
+  }
+  if (process.env.REDIS_URL) {
+    redisClient ??= new Redis(process.env.REDIS_URL, {
+      maxRetriesPerRequest: 2,
+      connectTimeout: 8000,
+    });
+    return await redisClient.get(key);
+  }
+  return null;
+}
+
+async function setRaw(key: string, value: string) {
+  const e = restEnv();
+  if (e.url && e.token) {
+    await fetch(`${e.url}/set/${key}`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${e.token}` },
+      body: value,
+    });
+    return;
+  }
+  if (process.env.REDIS_URL) {
+    redisClient ??= new Redis(process.env.REDIS_URL, {
+      maxRetriesPerRequest: 2,
+      connectTimeout: 8000,
+    });
+    await redisClient.set(key, value);
+  }
 }
 
 function loadLocal(): StoreShape {
@@ -86,7 +104,7 @@ function saveLocal(shape: StoreShape) {
 
 async function read(): Promise<StoreShape> {
   if (hasRedis()) {
-    const raw = await redis().get("rey:store");
+    const raw = await getRaw("rey:store");
     return raw ? (JSON.parse(raw) as StoreShape) : { orders: {}, keys: [] };
   }
   return loadLocal();
@@ -94,7 +112,7 @@ async function read(): Promise<StoreShape> {
 
 async function write(shape: StoreShape) {
   if (hasRedis()) {
-    await redis().set("rey:store", JSON.stringify(shape));
+    await setRaw("rey:store", JSON.stringify(shape));
     return;
   }
   saveLocal(shape);
