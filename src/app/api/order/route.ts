@@ -15,9 +15,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Too many orders — wait an hour." }, { status: 429 });
   }
 
-  let body: any;
+  let body: { method?: string; company?: string } | null = null;
   try {
-    body = await req.json();
+    body = (await req.json()) as { method?: string; company?: string };
   } catch {
     return NextResponse.json({ error: "Bad request." }, { status: 400 });
   }
@@ -27,8 +27,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Bad request." }, { status: 400 });
   }
 
-  const method = body.method;
-  if (!methodIds.includes(method)) {
+  const method = body?.method;
+  if (typeof method !== "string" || !methodIds.includes(method)) {
     return NextResponse.json({ error: "Unknown payment method." }, { status: 400 });
   }
 
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
   const id = crypto.randomUUID().slice(0, 8).toUpperCase();
   const order = {
     id,
-    method: method as any,
+    method: method as keyof typeof METHODS,
     address,
     amount,
     usd: PRICE_USD,

@@ -26,9 +26,9 @@ type Method = "btc" | "ltc" | "usdt_trc20";
 type Step = "pick" | "pay" | "done";
 
 const METHODS: Record<Method, { label: string; full: string; color: string; note: string }> = {
-  btc: { label: "BTC", full: "Bitcoin", color: "#f7931a", note: "1 confirmation · ~10-30 min" },
-  ltc: { label: "LTC", full: "Litecoin", color: "#9bb1cf", note: "1 confirmation · ~5-10 min" },
-  usdt_trc20: { label: "USDT", full: "USDT · TRC-20", color: "#26a17b", note: "~3-5 min" },
+  btc: { label: "BTC", full: "Bitcoin", color: "#ffffff", note: "1 confirmation · ~10-30 min" },
+  ltc: { label: "LTC", full: "Litecoin", color: "#ffffff", note: "1 confirmation · ~5-10 min" },
+  usdt_trc20: { label: "USDT", full: "USDT · TRC-20", color: "#ffffff", note: "~3-5 min" },
 };
 
 interface OrderInfo {
@@ -68,7 +68,7 @@ export function BuyDialog() {
   const [error, setError] = useState<string | null>(null);
   const [key, setKey] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const [now, setNow] = useState(Date.now());
+  const [now, setNow] = useState(() => Date.now());
   const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const { copied: copiedAddr, copy: copyAddr } = useCopy(order?.address ?? null);
@@ -160,10 +160,10 @@ export function BuyDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-md bg-[#0d0d12] border-white/10">
+      <DialogContent className="sm:max-w-md border-white/10 bg-[#050506]">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <KeyRound className="size-5 text-[#8a6cff]" />
+            <KeyRound className="size-5 text-white" />
             {step === "done" ? "License unlocked" : "Rey Tweaks — Pro license"}
           </DialogTitle>
           <DialogDescription>
@@ -174,8 +174,8 @@ export function BuyDialog() {
         </DialogHeader>
 
         {error && (
-          <div className="flex items-start gap-2.5 rounded-lg border border-[#ff5c5c]/30 bg-[#ff5c5c]/[0.07] px-3.5 py-3 text-sm text-[#ffb3a7]">
-            <AlertTriangle className="size-4 mt-0.5 shrink-0" />
+          <div className="flex items-start gap-2.5 rounded-lg border border-white/20 bg-white/[0.05] px-3.5 py-3 text-sm text-foreground/90">
+            <AlertTriangle className="mt-0.5 size-4 shrink-0 text-white/70" />
             <span>{error}</span>
           </div>
         )}
@@ -184,7 +184,7 @@ export function BuyDialog() {
           <div className="space-y-4">
             <Tabs value={method} onValueChange={(v) => setMethod(v as Method)}>
               <TabsList
-                className="w-full grid bg-white/[0.04]"
+                className="grid w-full bg-white/[0.05]"
                 style={{ gridTemplateColumns: `repeat(${methods.length}, 1fr)` }}
               >
                 {methods.map((m) => (
@@ -194,27 +194,27 @@ export function BuyDialog() {
                 ))}
               </TabsList>
               <TabsContent value={method}>
-                <div className="rounded-lg border border-white/[0.07] px-3.5 py-3 text-sm text-muted-foreground space-y-1">
+                <div className="space-y-1 rounded-lg border border-white/[0.08] px-3.5 py-3 text-sm text-muted-foreground">
                   <div className="flex items-center justify-between">
                     <span className="font-medium text-foreground">{METHODS[method].full}</span>
                     <span className="font-mono text-xs">{METHODS[method].note}</span>
                   </div>
-                  <div className="flex items-center gap-2 text-xs text-[#57d49b]">
-                    <ShieldCheck className="size-3.5" />
+                  <div className="flex items-center gap-2 text-xs text-foreground/80">
+                    <ShieldCheck className="size-3.5 text-white/70" />
                     exact amount matching · no overpayment needed · auto-delivery
                   </div>
                 </div>
               </TabsContent>
             </Tabs>
 
-            <div className="flex items-center gap-2 rounded-lg border border-[#8a6cff]/25 bg-[#8a6cff]/[0.06] px-3.5 py-2.5 text-xs text-muted-foreground">
-              <Clock3 className="size-4 text-[#8a6cff] shrink-0" />
+            <div className="flex items-center gap-2 rounded-lg border border-white/12 bg-white/[0.03] px-3.5 py-2.5 text-xs text-muted-foreground">
+              <Clock3 className="size-4 shrink-0 text-white/70" />
               Crypto only — no account, no KYC. Pay with any wallet, including RedotPay cards
               via exchange top-up.
             </div>
 
             <Button
-              className="w-full h-11 bg-[#8a6cff] hover:bg-[#9a7cff] text-white font-semibold"
+              className="h-11 w-full bg-white font-semibold text-black hover:bg-white/85"
               disabled={busy}
               onClick={() => startOrder(method)}
             >
@@ -228,8 +228,8 @@ export function BuyDialog() {
           <div className="space-y-4">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Send exactly</span>
-              <span className="font-mono font-bold text-lg">
-                {order.amount} <span className="text-[#8a6cff]">{order.ticker}</span>
+              <span className="font-mono text-lg font-bold">
+                {order.amount} <span className="text-white/80">{order.ticker}</span>
               </span>
             </div>
 
@@ -238,11 +238,11 @@ export function BuyDialog() {
             </div>
 
             <div className="space-y-2">
-              <div className="font-mono text-[10px] text-muted-foreground tracking-widest">
+              <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
                 {order.network.toUpperCase()} ADDRESS
               </div>
-              <div className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-black/30 px-3 py-2.5">
-                <code className="flex-1 text-xs break-all font-mono text-[#b39bff]">
+              <div className="flex items-center gap-2 rounded-lg border border-white/[0.08] bg-black/40 px-3 py-2.5">
+                <code className="flex-1 break-all font-mono text-xs text-foreground">
                   {order.address}
                 </code>
                 <Button
@@ -251,14 +251,14 @@ export function BuyDialog() {
                   className="shrink-0 text-muted-foreground"
                   onClick={copyAddr}
                 >
-                  {copiedAddr ? <Check className="size-4 text-[#57d49b]" /> : <Copy className="size-4" />}
+                  {copiedAddr ? <Check className="size-4 text-white" /> : <Copy className="size-4" />}
                 </Button>
               </div>
             </div>
 
             <div className="flex items-center justify-between text-xs text-muted-foreground">
               <span className="inline-flex items-center gap-2">
-                <span className="dot-live" />
+                <span className="dot-breath size-1.5 rounded-full bg-white" />
                 waiting for payment
               </span>
               <span className="font-mono">
@@ -270,7 +270,7 @@ export function BuyDialog() {
               href={`https://mempool.space${order.ticker === "BTC" ? "" : "/ltc"}/address/${order.address}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
             >
               <ExternalLink className="size-3.5" /> track on the explorer
             </a>
@@ -282,34 +282,34 @@ export function BuyDialog() {
             {key ? (
               <>
                 <div className="text-center">
-                  <div className="inline-flex size-12 items-center justify-center rounded-full bg-[#57d49b]/15 border border-[#57d49b]/30 mb-3">
-                    <Check className="size-6 text-[#57d49b]" />
+                  <div className="mb-3 inline-flex size-12 items-center justify-center rounded-full border border-white/25 bg-white/10">
+                    <Check className="size-6 text-white" />
                   </div>
                   <p className="text-sm text-muted-foreground">
                     Payment confirmed. Here is your lifetime key:
                   </p>
                 </div>
-                <div className="key-chip rounded-xl border border-[#8a6cff]/40 bg-[#8a6cff]/[0.08] px-4 py-4">
-                  <code className="block text-sm font-mono text-center text-[#e5ddff] break-all">
+                <div className="key-chip rounded-xl border border-white/30 bg-white/[0.06] px-4 py-4">
+                  <code className="block break-all text-center font-mono text-sm text-foreground">
                     {key}
                   </code>
                 </div>
                 <Button
-                  className="w-full h-11 bg-[#8a6cff] hover:bg-[#9a7cff] text-white font-semibold"
+                  className="h-11 w-full bg-white font-semibold text-black hover:bg-white/85"
                   onClick={copyKey}
                 >
                   {copiedKey ? <Check className="size-4" /> : <Copy className="size-4" />}
                   {copiedKey ? "Copied" : "Copy key"}
                 </Button>
-                <p className="text-xs text-muted-foreground text-center leading-relaxed">
+                <p className="text-center text-xs leading-relaxed text-muted-foreground">
                   Open the app → <b className="text-foreground">Settings → License key</b> → paste.
                   Unlocks instantly, no restart. Keep this key safe — you can also email it to
                   yourself.
                 </p>
               </>
             ) : (
-              <div className="text-center py-4 text-sm text-[#e8c37a]">
-                Payment confirmed but we're out of stock — your key will be topped up shortly.
+              <div className="py-4 text-center text-sm text-foreground/90">
+                Payment confirmed but we&apos;re out of stock — your key will be topped up shortly.
                 Contact us on Discord with order <code className="font-mono">{order?.id}</code>.
               </div>
             )}

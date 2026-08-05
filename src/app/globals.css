@@ -5,11 +5,11 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-display: var(--font-space-grotesk);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -48,116 +48,31 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-:root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  html {
-    @apply font-sans;
-  }
-}
-
 /* ───────────────────────────────────────────────────────────────────────────
-   REY TWEAKS · graphite & violet identity (dark-only site)
+   REY TWEAKS · deep black & glowing white
+   Grayscale only — status lives in brightness, never in a hue.
    ─────────────────────────────────────────────────────────────────────────── */
 :root {
-  --background: #070709;
-  --foreground: #f2f0ea;
-  --card: #0d0d12;
-  --card-foreground: #f2f0ea;
-  --popover: #0d0d12;
-  --popover-foreground: #f2f0ea;
-  --primary: #8a6cff;
-  --primary-foreground: #ffffff;
-  --secondary: #16161d;
-  --secondary-foreground: #f2f0ea;
-  --muted: #131318;
-  --muted-foreground: #8f8c98;
-  --accent: #191920;
-  --accent-foreground: #f2f0ea;
-  --destructive: #ff5c5c;
-  --border: rgb(255 255 255 / 0.08);
-  --input: rgb(255 255 255 / 0.12);
-  --ring: #8a6cff;
-  --chart-1: #8a6cff;
-  --chart-2: #61d3e8;
-  --chart-3: #57d49b;
-  --chart-4: #e8c37a;
-  --chart-5: #ff8a5c;
+  --background: #020202;
+  --foreground: #e7e7ea;
+  --card: #050506;
+  --card-foreground: #e7e7ea;
+  --popover: #050506;
+  --popover-foreground: #e7e7ea;
+  --primary: #ffffff;
+  --primary-foreground: #020202;
+  --secondary: #0d0d0f;
+  --secondary-foreground: #e7e7ea;
+  --muted: #0a0a0b;
+  --muted-foreground: #6b6b70;
+  --accent: #0d0d0f;
+  --accent-foreground: #e7e7ea;
+  --destructive: #e7e7ea;
+  --border: rgb(255 255 255 / 0.1);
+  --input: rgb(255 255 255 / 0.14);
+  --ring: #ffffff;
   --radius: 0.75rem;
-  --selection: rgb(138 108 255 / 0.35);
+  --selection: rgb(255 255 255 / 0.25);
 }
 
 html {
@@ -167,6 +82,7 @@ html {
 
 body {
   background: var(--background);
+  color: var(--foreground);
   overflow-x: hidden;
 }
 
@@ -179,95 +95,276 @@ body {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #070709;
+  background: #020202;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e1e26;
+  background: #1a1a1c;
   border-radius: 8px;
-  border: 2px solid #070709;
+  border: 2px solid #020202;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2c2c38;
+  background: #2a2a2e;
 }
 
-/* Ambient page backdrop: faint grid + violet bloom + film grain */
-.page-grid {
+/* Ambient bloom — the page's whole light, no boxes */
+.page-glow {
   position: fixed;
   inset: 0;
-  z-index: -2;
-  background-image:
-    linear-gradient(rgb(255 255 255 / 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.025) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, black 30%, transparent 75%);
-}
-.page-bloom {
-  position: fixed;
-  inset: 0;
-  z-index: -3;
+  z-index: -1;
+  pointer-events: none;
   background:
-    radial-gradient(52% 40% at 50% -6%, rgb(138 108 255 / 0.16), transparent 70%),
-    radial-gradient(30% 26% at 88% 12%, rgb(97 211 232 / 0.05), transparent 70%);
+    radial-gradient(58% 38% at 50% -8%, rgb(255 255 255 / 0.08), transparent 70%),
+    radial-gradient(26% 18% at 84% 6%, rgb(255 255 255 / 0.035), transparent 70%);
 }
+
+/* Film grain texture */
 .grain::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 100;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
 }
 
-/* Signature text gradients */
+/* Signature white gradients */
 .text-silver {
-  background: linear-gradient(180deg, #f7f5f0 0%, #cfccc5 55%, #8f8c98 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #d9d9de 55%, #8f8f96 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-.text-violet {
-  background: linear-gradient(120deg, #a78bfa, #8a6cff 45%, #6c4dff);
+.text-bright {
+  background: linear-gradient(120deg, #ffffff, #d4d4da 55%, #ffffff);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* Hairline card */
+/* Glow helpers — emphasis is light, not a second flat color */
+.glow-text {
+  text-shadow: 0 0 16px rgb(255 255 255 / 0.35), 0 0 48px rgb(255 255 255 / 0.14);
+}
+.glow-num {
+  text-shadow: 0 0 28px rgb(255 255 255 / 0.38), 0 0 90px rgb(255 255 255 / 0.16);
+}
+
+/* Translucent panel — used only for the depth stack + live widget */
 .hairline {
-  border: 1px solid rgb(255 255 255 / 0.08);
-  background: linear-gradient(180deg, rgb(255 255 255 / 0.03), rgb(255 255 255 / 0.008));
-  box-shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 24px 60px -40px rgb(0 0 0 / 0.8);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.045), rgb(255 255 255 / 0.01));
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.06) inset,
+    0 30px 80px -40px rgb(255 255 255 / 0.06);
 }
 
-/* Ticker marquee */
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+/* Solid white primary CTA — the single inversion per screen */
+.glow-btn {
+  background: #ffffff;
+  color: #020202;
+  box-shadow: 0 0 24px rgb(255 255 255 / 0.3), 0 0 64px rgb(255 255 255 / 0.12);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background 0.3s ease;
 }
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee var(--speed, 36s) linear infinite;
-}
-.marquee-reverse {
-  animation-direction: reverse;
-}
-.marquee-paused:hover .marquee-track {
-  animation-play-state: paused;
+.glow-btn:hover {
+  background: #f2f2f4;
+  box-shadow: 0 0 40px rgb(255 255 255 / 0.45), 0 0 100px rgb(255 255 255 / 0.18);
+  transform: translateY(-1px);
 }
 
-/* Scanline sweep */
-@keyframes sweep {
-  0%   { transform: translateY(-100%); }
-  100% { transform: translateY(100%); }
-}
-.scanline {
+/* Large soft light sources */
+.bloom {
   position: absolute;
-  inset-inline: 0;
-  height: 34%;
-  background: linear-gradient(180deg, transparent, rgb(138 108 255 / 0.07), transparent);
-  animation: sweep 3.4s ease-in-out infinite;
+  border-radius: 9999px;
+  pointer-events: none;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.07), transparent 65%);
+  filter: blur(46px);
+}
+
+/* Horizon arc catching light at a section top */
+.horizon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1000px, 95vw);
+  height: 240px;
+  pointer-events: none;
+  background: radial-gradient(50% 60% at 50% 0%, rgb(255 255 255 / 0.075), transparent 70%);
+}
+
+/* The planet — a 280vw circle whose top arc creates the horizon line.
+   No straight lines anywhere: it is the top of a very large sphere. */
+.planet-arc {
+  position: absolute;
+  left: 50%;
+  width: 280vw;
+  height: 280vw;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  background: radial-gradient(
+    closest-side at 50% 0%,
+    rgb(255 255 255 / 0.09) 0%,
+    rgb(255 255 255 / 0.04) 1.6%,
+    rgb(26 26 28 / 0.92) 3.6%,
+    rgb(12 12 13 / 0.98) 7%,
+    #08080a 11%,
+    var(--background) 24%
+  );
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 0.22),
+    inset 0 10px 36px -4px rgb(255 255 255 / 0.3);
+  opacity: 0.6;
+}
+
+/* Lit-edge panel — palace-style: bright edge on top that dies down the
+   sides, opaque dark body, physically-blurred fog inside (screen blend).
+   Light wraps the card: edge is lit, the fog pools at the bottom. */
+.panel-lit {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 26px;
+  background:
+    linear-gradient(#0a0a0b, #0a0a0b) padding-box,
+    linear-gradient(
+      to bottom,
+      rgb(255 255 255 / 0.5) 0%,
+      rgb(255 255 255 / 0.16) 10%,
+      rgb(255 255 255 / 0.06) 30%,
+      rgb(255 255 255 / 0.045) 60%,
+      rgb(255 255 255 / 0.03) 100%
+    ) border-box;
+  box-shadow: 0 26px 60px -30px rgb(0 0 0 / 0.9);
+  transition: filter 0.3s ease;
+}
+.panel-lit:hover {
+  filter: brightness(1.05);
+}
+.panel-lit::before {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: -28px;
+  height: 46%;
+  z-index: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(22px);
+  opacity: 0.85;
+  background:
+    radial-gradient(30% 42% at 43% 98%, rgb(255 255 255 / 0.4) 0%, rgb(255 255 255 / 0.13) 48%, transparent 82%),
+    radial-gradient(72% 48% at 54% 102%, rgb(255 255 255 / 0.12) 0%, transparent 82%),
+    radial-gradient(26% 64% at 15% 104%, rgb(255 255 255 / 0.08) 0%, transparent 76%),
+    radial-gradient(22% 78% at 74% 106%, rgb(255 255 255 / 0.1) 0%, transparent 72%);
+}
+.panel-lit > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Fading hairline dividers — never a full-strength line */
+.fade-line-bottom {
+  border-bottom: 1px solid transparent;
+  background-image: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 0.12) 28%,
+    rgb(255 255 255 / 0.16) 50%,
+    rgb(255 255 255 / 0.12) 72%,
+    transparent
+  );
+  background-size: 100% 1px;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+}
+.fade-line-v {
+  width: 1px;
+  height: 52px;
+  flex: none;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(255 255 255 / 0.12) 30%,
+    rgb(255 255 255 / 0.2) 50%,
+    rgb(255 255 255 / 0.12) 70%,
+    transparent
+  );
+}
+
+/* Numbers carved in light — bright at the bottom-centre, dying toward the
+   edges, like a flame inside the glyphs */
+.num-carve {
+  color: transparent;
+  background-image: radial-gradient(
+    110% 125% at 50% 82%,
+    #ffffff 0%,
+    rgb(231 231 234 / 0.8) 32%,
+    rgb(231 231 234 / 0.42) 66%,
+    rgb(231 231 234 / 0.15) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* The heart of light living behind the numbers — blurred, masked,
+   dissolved in fog. No readable circle. */
+.stat-fog {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%);
+  width: 860px;
+  max-width: 92vw;
+  height: 340px;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(56px);
+  opacity: 0.55;
+  background:
+    radial-gradient(34% 46% at 47% 56%, rgb(255 255 255 / 0.85) 0%, rgb(255 255 255 / 0.15) 30%, transparent 52%),
+    radial-gradient(60% 70% at 56% 48%, rgb(255 255 255 / 0.14) 0%, transparent 56%),
+    radial-gradient(40% 50% at 34% 40%, rgb(255 255 255 / 0.09) 0%, transparent 54%);
+  -webkit-mask: radial-gradient(ellipse 62% 60% at 50% 52%, #000 0%, rgb(0 0 0 / 0.55) 42%, transparent 80%);
+  mask: radial-gradient(ellipse 62% 60% at 50% 52%, #000 0%, rgb(0 0 0 / 0.55) 42%, transparent 80%);
+}
+
+/* Mouse-tracking light inside panels (driven by --mx / --my) */
+.spot-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    rgb(255 255 255 / 0.08),
+    transparent 65%
+  );
+}
+.group:hover .spot-overlay {
+  opacity: 1;
+}
+
+/* Hand-placed atmosphere dots */
+.atmo-dot {
+  position: absolute;
+  border-radius: 9999px;
+  background: #ffffff;
+  pointer-events: none;
+}
+
+/* Status dot — breathing, like it is monitoring something */
+@keyframes breath {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.dot-breath {
+  animation: breath 2s ease-in-out infinite;
 }
 
 /* Blinking caret */
@@ -279,44 +376,76 @@ body {
   display: inline-block;
   width: 8px;
   height: 1.05em;
-  background: #8a6cff;
+  background: #ffffff;
   margin-left: 2px;
   vertical-align: text-bottom;
   animation: caret 1s steps(1) infinite;
 }
 
-/* Status dot */
-@keyframes pulse-dot {
-  0%, 100% { box-shadow: 0 0 0 0 rgb(87 212 155 / 0.45); }
-  60% { box-shadow: 0 0 0 7px rgb(87 212 155 / 0); }
+/* Subtle CRT scanline — hero headline only */
+.crt-text {
+  position: relative;
 }
-.dot-live {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: #57d49b;
-  animation: pulse-dot 1.8s ease-out infinite;
-}
-
-/* FPS panel bars */
-@keyframes bar-dance {
-  0%, 100% { transform: scaleY(0.35); }
-  50% { transform: scaleY(1); }
+.crt-text::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgb(255 255 255 / 0.055) 0 1px,
+    transparent 1px 3px
+  );
+  mix-blend-mode: screen;
 }
 
-/* Reveal on scroll */
+/* Edge fade for full-width rows */
+.fade-x {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Outlined wordmarks (tuned-for row) */
+.outline-word {
+  -webkit-text-stroke: 1px rgb(255 255 255 / 0.3);
+  color: transparent;
+}
+
+/* Flowing telemetry dashes along the signal line */
+@keyframes signal-flow {
+  from { stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -240; }
+}
+.signal-flow {
+  animation: signal-flow 7s linear infinite;
+}
+
+/* Arrow link micro-interaction */
+.arrow-link .arrow {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.arrow-link:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* Reveal on scroll — blur-up, not a generic slide */
 .reveal {
   opacity: 0;
-  transform: translateY(22px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(16px);
+  filter: blur(6px);
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .reveal.in {
   opacity: 1;
   transform: none;
+  filter: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .reveal { transition: none; opacity: 1; transform: none; }
-  .marquee-track, .scanline { animation: none; }
+  .reveal { transition: none; opacity: 1; transform: none; filter: none; }
 }
 
 /* Big footer wordmark */
@@ -326,47 +455,62 @@ body {
   letter-spacing: -0.04em;
   font-weight: 800;
   user-select: none;
-}
-
-/* Hero panel CRT tint */
-.crt {
-  position: relative;
-  overflow: hidden;
-}
-.crt::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 5;
-  background: repeating-linear-gradient(
-    0deg,
-    rgb(0 0 0 / 0.09) 0px,
-    rgb(0 0 0 / 0.09) 1px,
-    transparent 1px,
-    transparent 3px
-  );
+  background: linear-gradient(180deg, rgb(255 255 255 / 0.85), rgb(255 255 255 / 0.06));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 /* Key reveal chip */
 @keyframes key-glow {
-  0%, 100% { box-shadow: 0 0 0 1px rgb(138 108 255 / 0.35), 0 0 26px rgb(138 108 255 / 0.16); }
-  50% { box-shadow: 0 0 0 1px rgb(138 108 255 / 0.55), 0 0 40px rgb(138 108 255 / 0.3); }
+  0%, 100% { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.3), 0 0 26px rgb(255 255 255 / 0.12); }
+  50% { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.5), 0 0 44px rgb(255 255 255 / 0.26); }
 }
 .key-chip {
   animation: key-glow 2.6s ease-in-out infinite;
 }
 
-/* Scroll progress */
-@keyframes scrollfill {
-  from { width: 0%; }
+/* Hero panel float */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
 }
-.scroll-progress {
+.float-slow {
+  animation: float 7s ease-in-out infinite;
+}
+
+/* Wavy marquee ribbon — palace-style continuous band, items bob on a sine */
+@keyframes marquee-x {
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x 32s linear infinite;
+}
+@keyframes marquee-bob {
+  0%, 100% { transform: translateY(5px); }
+  50% { transform: translateY(-5px); }
+}
+.marquee-item {
+  animation: marquee-bob 2.6s ease-in-out infinite;
+}
+
+/* Cursor-follow ambient light */
+.cursor-glow {
   position: fixed;
-  top: 0;
   left: 0;
-  height: 2px;
-  z-index: 120;
-  background: linear-gradient(90deg, #8a6cff, #61d3e8);
-  width: 0%;
+  top: 0;
+  width: 540px;
+  height: 540px;
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: 40;
+  background: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.07) 0%,
+    rgb(255 255 255 / 0.025) 38%,
+    transparent 65%
+  );
+  will-change: transform;
 }

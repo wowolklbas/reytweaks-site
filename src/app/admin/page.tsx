@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { ShieldAlert, KeyRound, Package, LogOut } from "lucide-react";
+import { ShieldAlert, KeyRound, LogOut } from "lucide-react";
 
 interface KeyRow {
   key: string;
@@ -27,16 +27,13 @@ const PASS = "rey-admin-pass";
 
 export default function AdminPage() {
   const [pass, setPass] = useState("");
-  const [authed, setAuthed] = useState(false);
+  const [authed, setAuthed] = useState(
+    () => typeof window !== "undefined" && !!sessionStorage.getItem(PASS)
+  );
   const [keys, setKeys] = useState<KeyRow[]>([]);
   const [orders, setOrders] = useState<OrderRow[]>([]);
   const [bulk, setBulk] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
-
-  useEffect(() => {
-    const saved = sessionStorage.getItem(PASS);
-    if (saved) setAuthed(true);
-  }, []);
 
   const api = async (path: string, init?: RequestInit) => {
     const r = await fetch(path, {
@@ -100,13 +97,13 @@ export default function AdminPage() {
           }}
         >
           <div className="flex items-center gap-2 font-bold text-lg">
-            <ShieldAlert className="size-5 text-[#e8c37a]" /> Admin
+            <ShieldAlert className="size-5 text-white/70" /> Admin
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="p">Password</Label>
             <Input id="p" type="password" value={pass} onChange={(e) => setPass(e.target.value)} />
           </div>
-          {msg && <p className="text-sm text-[#ffb3a7]">{msg}</p>}
+          {msg && <p className="text-sm text-foreground/80">{msg}</p>}
           <Button type="submit" className="w-full">Unlock</Button>
         </form>
       </main>
@@ -119,7 +116,7 @@ export default function AdminPage() {
     <main className="min-h-dvh mx-auto max-w-4xl px-5 py-12 space-y-10">
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-2 font-bold text-lg">
-          <KeyRound className="size-5 text-[#8a6cff]" /> Rey Tweaks — Shop Admin
+          <KeyRound className="size-5 text-white/80" /> Rey Tweaks — Shop Admin
         </div>
         <Button
           variant="ghost"

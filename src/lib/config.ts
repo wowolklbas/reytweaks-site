@@ -71,8 +71,13 @@ export function configuredMethods(): Method[] {
     });
 }
 
+interface RateLimitGlobal {
+  __rl_buckets?: Map<string, number[]>;
+}
+
 export function rateLimitBuckets(): Map<string, number[]> {
-  return (globalThis as any).__rl_buckets ??= new Map();
+  const g = globalThis as unknown as RateLimitGlobal;
+  return (g.__rl_buckets ??= new Map());
 }
 
 export const ADMIN_PASSWORD = env("ADMIN_PASSWORD") || "rey-admin-change-me";

@@ -1,20 +1,22 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, type MouseEvent, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export function Reveal({
   children,
   className,
   delay = 0,
-  as: Tag = "div",
+  onMouseMove,
+  onMouseLeave,
 }: {
   children: ReactNode;
   className?: string;
   delay?: number;
-  as?: "div" | "section" | "li" | "span";
+  onMouseMove?: (e: MouseEvent<HTMLDivElement>) => void;
+  onMouseLeave?: () => void;
 }) {
-  const ref = useRef<HTMLElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -35,8 +37,14 @@ export function Reveal({
   }, []);
 
   return (
-    <Tag ref={ref as any} className={cn("reveal", className)} style={{ transitionDelay: `${delay}ms` }}>
+    <div
+      ref={ref}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      className={cn("reveal", className)}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
       {children}
-    </Tag>
+    </div>
   );
 }

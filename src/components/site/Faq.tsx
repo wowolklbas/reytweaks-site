@@ -35,14 +35,14 @@ const QA = [
 
 export function Faq() {
   return (
-    <section id="faq" className="py-24">
+    <section id="faq" className="relative py-28 md:py-32">
       <div className="mx-auto max-w-3xl px-5">
         <Reveal className="text-center">
-          <span className="font-mono text-xs text-muted-foreground tracking-widest">
-            <span className="text-[#8a6cff]">03</span> — faq
+          <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+            questions, answered
           </span>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight">
-            Questions, <span className="text-silver">answered</span>
+          <h2 className="mt-5 font-display text-4xl font-bold tracking-tight">
+            Straight answers, <span className="text-silver">no fine print.</span>
           </h2>
         </Reveal>
 
@@ -52,12 +52,12 @@ export function Faq() {
               <AccordionItem
                 key={item.q}
                 value={item.q}
-                className="hairline rounded-xl px-5 data-open:border-[#8a6cff]/40 transition-colors"
+                className="rounded-lg border border-white/10 px-5 data-open:border-white/30 transition-colors"
               >
-                <AccordionTrigger className="text-left font-semibold py-4 hover:no-underline">
+                <AccordionTrigger className="py-4 text-left font-medium text-foreground hover:no-underline">
                   {item.q}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground leading-relaxed pb-4">
+                <AccordionContent className="pb-4 leading-relaxed text-muted-foreground">
                   {item.a}
                 </AccordionContent>
               </AccordionItem>

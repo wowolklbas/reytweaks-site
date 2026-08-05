@@ -48,34 +48,39 @@ export function Pricing() {
   }, []);
 
   return (
-    <section id="pricing" className="py-24 relative">
+    <section id="pricing" className="relative overflow-hidden py-28 md:py-32">
       <div className="mx-auto max-w-6xl px-5">
-        <Reveal className="max-w-2xl mx-auto text-center">
-          <span className="font-mono text-xs text-muted-foreground tracking-widest">
-            <span className="text-[#8a6cff]">02</span> — pricing
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-muted-foreground">
+            one key · lifetime
           </span>
-          <h2 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Start free. Unlock <span className="text-violet">everything</span>.
+          <h2 className="mt-5 font-display text-4xl font-bold tracking-tight md:text-6xl">
+            Start free. Unlock <span className="text-bright">everything.</span>
           </h2>
-          <p className="mt-4 text-muted-foreground text-lg">
+          <p className="mt-5 text-lg font-light text-muted-foreground">
             One key. Lifetime. Delivered automatically in under a minute.
           </p>
         </Reveal>
 
-        <div className="mt-12 grid md:grid-cols-2 gap-5 max-w-4xl mx-auto items-stretch">
-          <Reveal className="hairline rounded-2xl p-7 flex flex-col">
-            <div className="font-bold text-lg">Free</div>
+        <div className="mx-auto mt-14 grid max-w-3xl items-stretch gap-6 md:grid-cols-2">
+          <Reveal className="flex flex-col rounded-2xl border border-white/10 p-8">
+            <div className="font-semibold text-lg">Free</div>
             <div className="mt-3 flex items-baseline gap-1.5">
-              <span className="text-4xl font-extrabold text-silver">$0</span>
+              <span className="font-display text-4xl font-bold">$0</span>
               <span className="text-sm text-muted-foreground">forever</span>
             </div>
-            <ul className="mt-6 space-y-2.5 text-sm flex-1">
+            <ul className="mt-6 flex-1 space-y-2.5 text-sm">
               {FREE.map((f) => (
-                <li key={f.text} className="flex items-center gap-2.5 text-muted-foreground">
+                <li
+                  key={f.text}
+                  className={`flex items-center gap-2.5 ${
+                    f.on ? "text-foreground/80" : "text-muted-foreground/40"
+                  }`}
+                >
                   {f.on ? (
-                    <Check className="size-4 text-[#57d49b]" />
+                    <Check className="size-4 text-white/70" />
                   ) : (
-                    <X className="size-4 text-muted-foreground/40" />
+                    <X className="size-4 text-white/15" />
                   )}
                   {f.text}
                 </li>
@@ -84,7 +89,7 @@ export function Pricing() {
             <a
               href="/download/ReyTweaksSetup.exe"
               download
-              className="mt-7 inline-flex items-center justify-center gap-2 w-full h-11 rounded-xl border border-white/12 text-sm font-semibold hover:bg-white/[0.04] transition-colors"
+              className="mt-7 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full border border-white/15 text-sm font-semibold text-foreground hover:border-white/40 transition-colors"
             >
               <Download className="size-4" /> Download free
             </a>
@@ -92,47 +97,47 @@ export function Pricing() {
 
           <Reveal
             delay={120}
-            className="relative rounded-2xl p-[1px] bg-gradient-to-b from-[#8a6cff]/60 via-[#8a6cff]/25 to-transparent"
+            className="relative flex flex-col rounded-2xl border border-white/25 p-8 shadow-[0_0_80px_-24px_rgba(255,255,255,0.35)]"
           >
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 px-3 py-1 rounded-full bg-[#8a6cff] text-[11px] font-bold tracking-widest">
-              MOST POPULAR
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/40 px-3.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-foreground">
+              most popular
             </div>
-            <div className="rounded-2xl bg-[#0b0b10] p-7 h-full flex flex-col">
-              <div className="font-bold text-lg">Pro — Lifetime</div>
-              <div className="mt-3 flex items-baseline gap-1.5">
-                <span className="text-5xl font-extrabold text-silver">$10</span>
-                <span className="text-sm text-muted-foreground">one-time · no subscription</span>
-              </div>
-              <div className="mt-2 font-mono text-xs text-muted-foreground">
-                {rates && crypto
-                  ? `≈ ${crypto.btc.toFixed(5)} BTC · ${crypto.ltc.toFixed(4)} LTC · 10 USDT (TRC-20)`
-                  : "BTC · LTC · USDT (TRC-20)"}
-                {rates ? "" : " · live"}
-              </div>
-              <ul className="mt-6 space-y-2.5 text-sm flex-1">
-                {PRO.map((f) => (
-                  <li key={f.text} className="flex items-center gap-2.5 text-muted-foreground">
-                    <Check className="size-4 text-[#8a6cff]" />
-                    {f.text}
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-7 space-y-2.5">
-                <button
-                  onClick={() => openBuy()}
-                  className="w-full h-12 rounded-xl bg-[#8a6cff] text-white font-bold hover:bg-[#9a7cff] shadow-[0_0_36px_rgba(138,108,255,0.4)] transition-all"
+            <div className="font-semibold text-lg">Pro — Lifetime</div>
+            <div className="mt-3 flex items-baseline gap-1.5">
+              <span className="font-display text-5xl font-bold glow-num">$10</span>
+              <span className="text-sm text-muted-foreground">one-time · no subscription</span>
+            </div>
+            <div className="mt-2 font-mono text-xs text-muted-foreground">
+              {rates && crypto
+                ? `≈ ${crypto.btc.toFixed(5)} BTC · ${crypto.ltc.toFixed(4)} LTC · 10 USDT (TRC-20)`
+                : "BTC · LTC · USDT (TRC-20)"}
+            </div>
+            <ul className="mt-6 flex-1 space-y-2.5 text-sm">
+              {PRO.map((f) => (
+                <li key={f.text} className="flex items-center gap-2.5 text-foreground/80">
+                  <Check className="size-4 text-white" />
+                  {f.text}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-7 space-y-2.5">
+              <button
+                onClick={() => openBuy()}
+                className="glow-btn inline-flex h-12 w-full items-center justify-center gap-2 rounded-full font-bold"
+              >
+                <Bitcoin className="size-4" /> Buy license
+              </button>
+              <p className="text-center text-[11px] text-muted-foreground">
+                Crypto checkout · instant key delivery · or{" "}
+                <a
+                  href={DISCORD_URL}
+                  target="_blank"
+                  rel="noopener"
+                  className="text-foreground/80 underline decoration-white/30 hover:text-foreground"
                 >
-                  <span className="inline-flex items-center gap-2">
-                    <Bitcoin className="size-4" /> Buy license
-                  </span>
-                </button>
-                <p className="text-center text-[11px] text-muted-foreground">
-                  Crypto checkout · instant key delivery · or{" "}
-                  <a href={DISCORD_URL} target="_blank" rel="noopener" className="text-[#8a6cff] hover:underline">
-                    buy on Discord
-                  </a>
-                </p>
-              </div>
+                  buy on Discord
+                </a>
+              </p>
             </div>
           </Reveal>
         </div>

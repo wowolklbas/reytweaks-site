@@ -22,9 +22,9 @@ export async function POST(req: Request) {
       { status: 403 }
     );
   }
-  let body: any;
+  let body: { keys?: string } | null = null;
   try {
-    body = await req.json();
+    body = (await req.json()) as { keys?: string };
   } catch {
     return NextResponse.json({ error: "Bad request." }, { status: 400 });
   }
