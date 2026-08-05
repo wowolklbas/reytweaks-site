@@ -35,3 +35,5 @@ yarn-error.log*
 
 # log files
 *.log
+
+.vercel

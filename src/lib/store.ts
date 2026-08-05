@@ -1,6 +1,8 @@
 // Order + key-pool persistence.
 //
-// Prod (Vercel):  Upstash Redis via env (UPSTASH_REDIS_REST_URL / TOKEN).
+// Prod (Vercel):  Upstash Redis via env. Supports both Vercel's auto-injected
+//                 KV_REST_API_URL / KV_REST_API_TOKEN and manual
+//                 UPSTASH_REDIS_REST_URL / UPSTASH_REDIS_REST_TOKEN.
 // Local/dev:      JSON files under ./data (gitignored) — identical API.
 
 import fs from "node:fs";
@@ -33,29 +35,35 @@ interface StoreShape {
 const DATA_DIR = path.join(process.cwd(), "data");
 const FILE = path.join(DATA_DIR, "store.json");
 
+function redisEnv() {
+  return {
+    url: process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || "",
+    token:
+      process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "",
+  };
+}
+
 function hasRedis(): boolean {
-  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+  const e = redisEnv();
+  return Boolean(e.url && e.token);
 }
 
 function redis() {
+  const e = redisEnv();
   return {
     get: async (key: string) => {
-      const r = await fetch(
-        `${process.env.UPSTASH_REDIS_REST_URL}/get/${key}`,
-        { headers: { Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}` } }
-      );
+      const r = await fetch(`${e.url}/get/${key}`, {
+        headers: { Authorization: `Bearer ${e.token}` },
+      });
       const j = (await r.json()) as { result?: string | null };
       return j.result ?? null;
     },
     set: async (key: string, value: string) => {
-      await fetch(
-        `${process.env.UPSTASH_REDIS_REST_URL}/set/${key}`,
-        {
-          method: "POST",
-          headers: { Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}` },
-          body: value,
-        }
-      );
+      await fetch(`${e.url}/set/${key}`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${e.token}` },
+        body: value,
+      });
     },
   };
 }
